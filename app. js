@@ -1,0 +1,50 @@
+document.addEventListener("DOMContentLoaded", () => {
+    getCoordinates();
+});
+
+// Step A: Request the user's location coordinates from the browser
+function getCoordinates() {
+    const weatherContainer = document.getElementById("weather-container");
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                fetchWeatherData(lat, lon);
+            },
+            (error) => {
+                weatherContainer.innerHTML = `<p>Location access denied. Please enable location permissions to see live weather.</p>`;
+            }
+        );
+    } else {
+        weatherContainer.innerHTML = "<p>Geolocation is not supported by this browser.</p>";
+    }
+}
+
+// Step B: Fetch weather data using coordinates from a completely free API
+async function fetchWeatherData(lat, lon) {
+    const weatherContainer = document.getElementById("weather-container");
+    const apiUrl = `https://open-meteo.com{lat}&longitude=${lon}&current_weather=true`;
+
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Network error");
+        
+        const data = await response.json();
+        displayWeather(data.current_weather);
+    } catch (error) {
+        weatherContainer.innerHTML = `<p>Failed to retrieve weather data: ${error.message}</p>`;
+    }
+}
+
+// Step C: Display weather data directly in the portfolio layout
+function displayWeather(weather) {
+    const weatherContainer = document.getElementById("weather-container");
+    
+    weatherContainer.innerHTML = `
+        <h3 style="color: orange; margin-bottom: 5px;">📍 Live Local Weather</h3>
+        <p>Temperature: <strong>${weather.temperature}°C</strong></p>
+        <p>Wind Speed: <strong>${weather.windspeed} km/h</strong></p>
+    `;
+}
