@@ -1,0 +1,85 @@
+/* Base Mobile-First Styles (Cell Phone Design) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f0f2f5;
+    color: #333;
+    padding: 15px;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar {
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+h1 { color: orange; font-size: 1.5rem; margin-bottom: 5px; }
+h2 { color: #aaa; font-size: 0.95rem; margin-bottom: 15px; }
+
+.weather-widget {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    color: orange;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 5px;
+}
+
+p { line-height: 1.6; margin-bottom: 10px; font-size: 0.95rem; }
+
+/* 💻 Laptop & Big Screen Styles (Overrides Mobile Layout) */
+@media (min-width: 768px) {
+    body {
+        padding: 30px;
+    }
+    
+    .app-container {
+        flex-direction: row; /* Aligns sidebar and content side-by-side */
+        max-width: 1100px;
+        margin: 0 auto;
+        gap: 25px;
+    }
+    
+    .sidebar {
+        flex: 1; /* Sidebar takes 1 part of screen width */
+        text-align: left;
+        height: fit-content;
+        position: sticky;
+        top: 30px;
+    }
+    
+    .main-content {
+        flex: 2; /* Main text content takes 2 parts of screen width */
+    }
+}
